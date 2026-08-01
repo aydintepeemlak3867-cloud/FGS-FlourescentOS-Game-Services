@@ -1,0 +1,39 @@
+import sys, random
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel
+from PyQt6.QtCore import QTimer
+
+class CatchTheSquare(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Catch The Square")
+        self.setGeometry(100, 100, 400, 400)
+
+        self.score = 0
+        self.label = QLabel(f"Skor: {self.score}", self)
+        self.label.move(10, 10)
+
+        self.square = QPushButton("", self)
+        self.square.setStyleSheet("background-color: red;")
+        self.square.resize(50, 50)
+        self.square.clicked.connect(self.catch)
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.move_square)
+        self.timer.start(1000)
+
+        self.move_square()
+
+    def move_square(self):
+        x = random.randint(50, 350)
+        y = random.randint(50, 350)
+        self.square.move(x, y)
+
+    def catch(self):
+        self.score += 1
+        self.label.setText(f"Skor: {self.score}")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    game = CatchTheSquare()
+    game.show()
+    sys.exit(app.exec())
