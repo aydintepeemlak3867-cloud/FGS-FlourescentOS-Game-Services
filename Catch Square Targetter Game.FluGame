@@ -1,21 +1,88 @@
-Değerli kullanıcılar,
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+===============================================================================
+FluorescentOS SPM System Notice Engine
+Subsystem : FGS Decommissioning Announcement
+Motif     : [/] Cast-Iron Industrial Minimalist
+===============================================================================
+"""
+
+import os
+import sys
+import time
+
+# ANSI Escape Codes for Cast-Iron Terminal Aesthetic
+BOLD = "\033[1m"
+DIM = "\033[2m"
+GRAY = "\033[90m"
+WHITE = "\033[97m"
+RED = "\033[31m"
+CYAN = "\033[36m"
+RESET = "\033[0m"
+
+MOTIF = f"{GRAY}[/]{RESET}"
+
+NOTICE_TEXT = """Değerli kullanıcılar,
 
 FluorescentOS çekirdek mimarisi ve sistem prensipleri doğrultusunda alınan kararla, Fluorescent Game Services (FGS) katmanı 30 Eylül 2026 tarihi itibarıyla tamamen servis dışı bırakılmıştır.
 
 FGS, ilk etapta arka plan süreçlerini ve oyun içi servis etkileşimlerini kolaylaştırmak amacıyla tasarlanmış olsa da gelinen noktada sistemin yalınlık, düşük bellek kullanımı ve doğrudan donanım erişimi hedefleriyle çeliştiği tespit edilmiştir. Yüksek seviyeli arka plan servislerinin yarattığı işlemci yükü, gereksiz soyutlama katmanları ve CPython tabanlı yapıların getirdiği bellek şişkinliği, FluorescentOS'in katı ve katılaşmış (dökme demir) tasarım doktrinine ters düşmektedir.
 
 Süreç ve Geçiş Detayları:
-
-Servis Feshi: Arka planda çalışan FGS daemon süreçleri, kütüphaneleri ve bunlara bağlı API çağrıları sonraki çekirdek güncellemesinden itibaren tamamen kaldırılacaktır.
-
-Yerel İcra (Native Execution): Tüm uygulama ve yazılımlar, herhangi bir bağımlılık servisine ihtiyaç duymadan doğrudan işletim sistemi üzerinde yalın çalıştırma kütükleri olarak yürütülecektir.
-
-Veri Saklama: FGS sunucu ve yerel ara bellek yapıları kalıcı olarak temizlenecektir. Yerel durum kayıtlarınızı düz metin veya minimalist dosya biçimlerine aktarmanız tavsiye edilir.
+1. Servis Feshi: Arka planda çalışan FGS daemon süreçleri, kütüphaneleri ve bunlara bağlı API çağrıları sonraki çekirdek güncellemesinden itibaren tamamen kaldırılacaktır.
+2. Yerel İcra (Native Execution): Tüm uygulama ve yazılımlar, herhangi bir bağımlılık servisine ihtiyaç duymadan doğrudan işletim sistemi üzerinde yalın çalıştırma kütükleri olarak yürütülecektir.
+3. Veri Saklama: FGS sunucu ve yerel ara bellek yapıları kalıcı olarak temizlenecektir. Yerel durum kayıtlarınızı düz metin veya minimalist dosya biçimlerine aktarmanız tavsiye edilir.
 
 Sistem kaynaklarını doğrudan donanıma ve çekirdek kararlılığına ayırma ilkemize sadık kalıyoruz. Sistemimizin temel hedefi, araya fazladan bağımlılık katmanı koymadan maksimum verimle çalışmaktır.
 
 Anlayışınız ve sistem ilkelerimize sağladığınız uyum için teşekkür ederiz.
 
 FluorescentOS Sistem Mimarisi ve Yazılım Ekibi
+[/]"""
 
-[/]
+
+def render_header():
+    """Renders the top industrial banner."""
+    print(f"\n{GRAY}================================================================================{RESET}")
+    print(f"{MOTIF} {BOLD}{WHITE}FLUORESCENT OS // SPM KERNEL ANNOUNCEMENT{RESET} {MOTIF}")
+    print(f"{GRAY}SUB-SYSTEM: FGS_DECOMMISSION // REF: REFU-2026-FGS{RESET}")
+    print(f"{GRAY}================================================================================{RESET}\n")
+
+
+def render_footer():
+    """Renders the bottom system status footer."""
+    print(f"\n{GRAY}================================================================================{RESET}")
+    print(f"{MOTIF} {DIM}STATE: BARE-METAL EXECUTION ONLY // MEMORY CLEARED{RESET}")
+    print(f"{GRAY}================================================================================{RESET}\n")
+
+
+def print_notice(text: str, delay: float = 0.002):
+    """
+    Prints notice text with a subtle mechanical typing cadence.
+    """
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        if delay > 0:
+            time.sleep(delay)
+
+
+def main():
+    # Clear screen for industrial presentation if supported
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    render_header()
+    print_notice(NOTICE_TEXT)
+    render_footer()
+    
+    # Cold prompt acknowledgment
+    try:
+        input(f"{GRAY}[ SİSTEM MUTABAKATI: Devam etmek için ENTER tuşuna basın... ]{RESET}")
+    except KeyboardInterrupt:
+        print(f"\n{RED}{MOTIF} İŞLEM KULLANICI TARAFINDAN KESİLDİ.{RESET}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
