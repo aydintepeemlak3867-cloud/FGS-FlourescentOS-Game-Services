@@ -1,39 +1,21 @@
-import sys, random
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLabel
-from PyQt6.QtCore import QTimer
+Değerli kullanıcılar,
 
-class CatchTheSquare(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Catch The Square")
-        self.setGeometry(100, 100, 400, 400)
+FluorescentOS çekirdek mimarisi ve sistem prensipleri doğrultusunda alınan kararla, Fluorescent Game Services (FGS) katmanı 30 Eylül 2026 tarihi itibarıyla tamamen servis dışı bırakılmıştır.
 
-        self.score = 0
-        self.label = QLabel(f"Skor: {self.score}", self)
-        self.label.move(10, 10)
+FGS, ilk etapta arka plan süreçlerini ve oyun içi servis etkileşimlerini kolaylaştırmak amacıyla tasarlanmış olsa da gelinen noktada sistemin yalınlık, düşük bellek kullanımı ve doğrudan donanım erişimi hedefleriyle çeliştiği tespit edilmiştir. Yüksek seviyeli arka plan servislerinin yarattığı işlemci yükü, gereksiz soyutlama katmanları ve CPython tabanlı yapıların getirdiği bellek şişkinliği, FluorescentOS'in katı ve katılaşmış (dökme demir) tasarım doktrinine ters düşmektedir.
 
-        self.square = QPushButton("", self)
-        self.square.setStyleSheet("background-color: red;")
-        self.square.resize(50, 50)
-        self.square.clicked.connect(self.catch)
+Süreç ve Geçiş Detayları:
 
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.move_square)
-        self.timer.start(1000)
+Servis Feshi: Arka planda çalışan FGS daemon süreçleri, kütüphaneleri ve bunlara bağlı API çağrıları sonraki çekirdek güncellemesinden itibaren tamamen kaldırılacaktır.
 
-        self.move_square()
+Yerel İcra (Native Execution): Tüm uygulama ve yazılımlar, herhangi bir bağımlılık servisine ihtiyaç duymadan doğrudan işletim sistemi üzerinde yalın çalıştırma kütükleri olarak yürütülecektir.
 
-    def move_square(self):
-        x = random.randint(50, 350)
-        y = random.randint(50, 350)
-        self.square.move(x, y)
+Veri Saklama: FGS sunucu ve yerel ara bellek yapıları kalıcı olarak temizlenecektir. Yerel durum kayıtlarınızı düz metin veya minimalist dosya biçimlerine aktarmanız tavsiye edilir.
 
-    def catch(self):
-        self.score += 1
-        self.label.setText(f"Skor: {self.score}")
+Sistem kaynaklarını doğrudan donanıma ve çekirdek kararlılığına ayırma ilkemize sadık kalıyoruz. Sistemimizin temel hedefi, araya fazladan bağımlılık katmanı koymadan maksimum verimle çalışmaktır.
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    game = CatchTheSquare()
-    game.show()
-    sys.exit(app.exec())
+Anlayışınız ve sistem ilkelerimize sağladığınız uyum için teşekkür ederiz.
+
+FluorescentOS Sistem Mimarisi ve Yazılım Ekibi
+
+[/]
